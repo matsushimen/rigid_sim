@@ -24,16 +24,14 @@
 
 ////////座標の計算に必要な変数
 unsigned int Number;//number of molecule
-double  Max = 0.1,min = 100000000.0, sum = 0.0;
-int i, j, n, m, k, read = 0, save = 0, large, small;
 unsigned long long step;
-double t = 1.0/(float)D, d, d_0;
+int read = 0, save = 0, large, small;
 FILE *gp;
 time_t times;
 
 //////ファイルを読み込む関数
 void readposition(int argc, char *argv[]){
-    
+
 	if(read == 0){
 		if (argc != 2){
 			printf("\n\n    error : input position file\n\n");
@@ -115,9 +113,10 @@ void molsposition(void){
     double count[Number][Number];
     double list_no[Number], list_pair[Number][Number];
     double r_rist = 4.0;
-    double d;
+    double  Max = 0.1,min = 100000000.0, sum = 0.0;
+    int i, j, n, m, k;
+    double t = 1.0/(float)D, d, d_0;
     
-   
 
     
 	for(step = step; step < STEP; step++){
@@ -247,7 +246,7 @@ void molsposition(void){
                         if((mlcl[i].bond_pair == m)&&(mlcl[m].bond_pair == i))
                         {
                             
-                            if(d>(mlcl[i].r+mlcl[m].r)*1.01)//確率で片思いに
+                            if(d>(mlcl[i].r+mlcl[m].r)*1.1)//確率で片思いに
                             {
                                 mlcl[i].bond_pair = -1;
                             }
@@ -306,7 +305,7 @@ void molsposition(void){
             
             
         
-            if((step%10000 == 0)&&(step!=0))
+            if((step%10000000 == 0)&&(step!=0))
             {
                 
                 //テキストファイルへの書き出し
