@@ -16,7 +16,7 @@
 #include <omp.h>
 
 
-#define STEP (10000000000)
+#define STEP (10000000000)//100億
 #define D (2.0e+5)//刻み数
 #define EXVE (10000.0)//排除体積バネ定数
 #define LINEAR (10000.0)//線形バネ接続
@@ -24,10 +24,9 @@
 
 ////////座標の計算に必要な変数
 unsigned int Number;//number of molecule
-double  Max = 0.1,min = 100000000.0, sum = 0.0;
-int i, j, n, m, k, read = 0, save = 0, large, small;
+
 unsigned long long step;
-double t = 1.0/(float)D, d, d_0;
+int read = 0, save = 0, large, small;
 FILE *gp;
 time_t times;
 
@@ -115,8 +114,9 @@ void molsposition(void){
     double count[Number][Number];
     double list_no[Number], list_pair[Number][Number];
     double r_rist = 4.0;
-    double d;
-    
+    double  Max = 0.1,min = 100000000.0, sum = 0.0;
+    int i, j, n, m, k;
+    double t = 1.0/(float)D, d, d_0;
    
 
     
@@ -264,7 +264,7 @@ void molsposition(void){
                         if((mlcl[i].bond_pair == m)&&(mlcl[m].bond_pair == i))
                         {
                             
-                            if(d>(mlcl[i].r+mlcl[m].r)*1.01)//確率で片思いに
+                            if(d>(mlcl[i].r+mlcl[m].r)*1.1)//確率で片思いに
                             {
                                 mlcl[i].bond_pair = -1;
 
@@ -324,7 +324,7 @@ void molsposition(void){
             
             
         
-            if((step%10000 == 0)&&(step!=0))
+            if((step%10000000 == 0)&&(step!=0))
             {
                 
                 //テキストファイルへの書き出し
